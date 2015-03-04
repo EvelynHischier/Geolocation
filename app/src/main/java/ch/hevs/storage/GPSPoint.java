@@ -1,6 +1,9 @@
 package ch.hevs.storage;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -16,14 +19,15 @@ public class GPSPoint implements Serializable{
     private float speed;
     private float bearing;
     private int satellites;
-    private Date timestamp;
+    private Calendar timestamp;
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     /* ************************************************************
 	 * 					Constructors
 	 **************************************************************/
     // Empty constructor
     public GPSPoint(){
-        timestamp = new Date();
+        timestamp = Calendar.getInstance();
     }
 
     public GPSPoint(double longitude, double latitude, double altitude, float accuracy, float speed, float bearing, int satellites) {
@@ -104,12 +108,19 @@ public class GPSPoint implements Serializable{
         this.satellites = satellites;
     }
 
-    public Date getTimestamp() {
+    public Calendar getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(Date timestamp) {
+    public void setTimestamp(Calendar timestamp) {
         this.timestamp = timestamp;
+    }
+    public void setTimestamp(String timestamp){
+        try {
+            this.timestamp.setTime(dateFormat.parse(timestamp));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 }
 

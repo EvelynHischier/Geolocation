@@ -4,6 +4,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 /**
  * Created by Evelyn on 04.03.2015.
  */
@@ -33,6 +36,8 @@ public class LocalDatabaseAccess {
 	 **************************************************************/
      public static long writeGPSData(Context context, GPSPoint point) {
          long state;
+         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
          openConnection(context);
 
          ContentValues values = new ContentValues();
@@ -43,8 +48,8 @@ public class LocalDatabaseAccess {
          values.put(SQLHelper.GPSPoint_LONGITUDE, point.getLongitude());
          values.put(SQLHelper.GPSPoint_SATELLITES, point.getSatellites());
          values.put(SQLHelper.GPSPoint_SPEED, point.getSpeed());
-         values.put(SQLHelper.GPSPoint_TIMESTAMP, new DateTime(point
-                 .getTimestamp().getValue()).toString());
+         values.put(SQLHelper.GPSPoint_TIMESTAMP,
+                 dateFormat.format(Calendar.getInstance().getTime()));
 
          state = database.insert(SQLHelper.TABLE_NAME_GPSPoint, null, values);
          closeConnection();

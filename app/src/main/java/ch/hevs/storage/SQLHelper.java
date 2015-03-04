@@ -45,7 +45,7 @@ public class SQLHelper extends SQLiteOpenHelper {
             GPSPoint_ALTITUDE + " DOUBLE, " +
             GPSPoint_ACCURACY + " FLOAT, " +
             GPSPoint_SATELLITES + " INTEGER, " +
-            GPSPoint_TIMESTAMP + " DATE, " +
+            GPSPoint_TIMESTAMP + " TEXT, " +
             GPSPoint_SPEED + " FLOAT, " +
             GPSPoint_BEARING + " FLOAT, "
             + ")";
