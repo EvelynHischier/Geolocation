@@ -2,10 +2,13 @@ package ch.hevs.storage;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by Evelyn on 04.03.2015.
@@ -34,7 +37,7 @@ public class LocalDatabaseAccess {
      /* ************************************************************
 	 * 					Save objects local on the phone
 	 **************************************************************/
-     public static long writeGPSData(Context context, GPSPoint point) {
+     public static long writeGPSPoint(Context context, GPSPoint point) {
          long state;
          SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -55,5 +58,35 @@ public class LocalDatabaseAccess {
          closeConnection();
          return state;
      }
+
+    public static List<GPSPoint> readGPSPoint(Context context) {
+        List<GPSPoint> points = new ArrayList<>();
+        GPSPoint point;
+        Cursor cursor;
+        String dateText;
+
+        openConnection(context);
+        String sql = "SELECT * FROM "+SQLHelper.TABLE_NAME_GPSPoint;
+        cursor = database.rawQuery(sql, null);
+
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            point = new GPSPoint();
+            point.setAccuracy(cursor.getFloat(cursor.getColumnIndex(SQLHelper.GPSPoint_ACCURACY)));
+            point.setAltitude(cursor.getDouble(cursor.getColumnIndex(SQLHelper.GPSPoint_ALTITUDE)));
+            point.setBearing(cursor.getFloat(cursor.getColumnIndex(SQLHelper.GPSPoint_BEARING)));
+            point.setId(cursor.getLong(cursor.getColumnIndex(SQLHelper.GPSPoint_ID)));
+            point.setLatitude(cursor.getDouble(cursor.getColumnIndex(SQLHelper.GPSPoint_LATITUDE)));
+            point.setLongitude(cursor.getDouble(cursor.getColumnIndex(SQLHelper.GPSPoint_LONGITUDE)));
+            point.setSatellites(cursor.getInt(cursor.getColumnIndex(SQLHelper.GPSPoint_SATELLITES)));
+            point.setTimestamp(cursor.getString(cursor.getColumnIndex(SQLHelper.GPSPoint_TIMESTAMP)));
+
+            points.add(point);
+            cursor.moveToNext();
+        }
+        cursor.close();
+        closeConnection();
+        return points;
+    }
 
 }
