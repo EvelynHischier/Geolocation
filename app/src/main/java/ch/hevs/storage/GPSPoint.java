@@ -38,6 +38,7 @@ public class GPSPoint implements Serializable{
         this.speed = speed;
         this.bearing = bearing;
         this.satellites = satellites;
+        timestamp = Calendar.getInstance();
     }
 
      /* ************************************************************
@@ -110,6 +111,10 @@ public class GPSPoint implements Serializable{
 
     public Calendar getTimestamp() {
         return timestamp;
+    }
+
+    public String getTimestampString(){
+        return dateFormat.format(timestamp);
     }
 
     public void setTimestamp(Calendar timestamp) {
