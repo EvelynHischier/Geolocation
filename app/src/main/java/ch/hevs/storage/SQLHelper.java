@@ -23,7 +23,7 @@ public class SQLHelper extends SQLiteOpenHelper {
     /* ************************************************************
 	 * 					Column titles
 	 **************************************************************/
-    // Title of Columns of GPSData
+    // Title of Columns of GPSPoint
     public static final String GPSPoint_ID          =  "id";
     public static final String GPSPoint_LONGITUDE   = "longitude";
     public static final String GPSPoint_LATITUDE    = "latitude";
@@ -47,7 +47,7 @@ public class SQLHelper extends SQLiteOpenHelper {
             GPSPoint_SATELLITES + " INTEGER, " +
             GPSPoint_TIMESTAMP + " TEXT, " +
             GPSPoint_SPEED + " FLOAT, " +
-            GPSPoint_BEARING + " FLOAT, "
+            GPSPoint_BEARING + " FLOAT "
             + ")";
 
     /* ************************************************************

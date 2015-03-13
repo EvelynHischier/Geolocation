@@ -114,7 +114,7 @@ public class GPSPoint implements Serializable{
     }
 
     public String getTimestampString(){
-        return dateFormat.format(timestamp);
+        return dateFormat.format(timestamp.getTime());
     }
 
     public void setTimestamp(Calendar timestamp) {

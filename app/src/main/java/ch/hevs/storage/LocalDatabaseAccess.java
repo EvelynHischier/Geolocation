@@ -39,7 +39,6 @@ public class LocalDatabaseAccess {
 	 **************************************************************/
      public static long writeGPSPoint(Context context, GPSPoint point) {
          long state;
-         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
          openConnection(context);
 
@@ -51,8 +50,7 @@ public class LocalDatabaseAccess {
          values.put(SQLHelper.GPSPoint_LONGITUDE, point.getLongitude());
          values.put(SQLHelper.GPSPoint_SATELLITES, point.getSatellites());
          values.put(SQLHelper.GPSPoint_SPEED, point.getSpeed());
-         values.put(SQLHelper.GPSPoint_TIMESTAMP,
-                 dateFormat.format(Calendar.getInstance().getTime()));
+         values.put(SQLHelper.GPSPoint_TIMESTAMP, point.getTimestampString());
 
          state = database.insert(SQLHelper.TABLE_NAME_GPSPoint, null, values);
          closeConnection();
